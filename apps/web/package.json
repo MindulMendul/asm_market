@@ -1,0 +1,17 @@
+{
+  "name": "@soma-market/web",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@astrojs/svelte": "^3.0.0",
+    "@hono/rpc": "^1.0.0",
+    "astro": "^3.4.0",
+    "svelte": "^5.0.0"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "@soma-market/db",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "index.ts",
+  "types": "index.ts",
+  "dependencies": {
+    "@drizzle-orm/postgres-js": "^0.30.0",
+    "@supabase/supabase-js": "^2.0.0",
+    "drizzle-orm": "^0.30.0",
+    "postgres": "^3.0.0"
+  }
+}

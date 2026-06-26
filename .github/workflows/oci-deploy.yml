@@ -1,0 +1,61 @@
+# .github/workflows/oci-deploy.yml
+# OCI Compute 서버에 PEM 기반 SSH 배포를 수행하는 GitHub Actions 워크플로우
+# secrets:
+#   OCI_SSH_PRIVATE_KEY - PEM 키 파일 내용
+#   OCI_HOST - OCI 서버 IP 또는 호스트
+#   OCI_USER - SSH 사용자명
+#   OCI_REMOTE_DIR - 원격 배포 디렉토리
+name: OCI Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build monorepo
+        run: npm run build
+
+      - name: Deploy to OCI
+        env:
+          OCI_SSH_PRIVATE_KEY: ${{ secrets.OCI_SSH_PRIVATE_KEY }}
+          OCI_HOST: ${{ secrets.OCI_HOST }}
+          OCI_USER: ${{ secrets.OCI_USER }}
+          OCI_REMOTE_DIR: ${{ secrets.OCI_REMOTE_DIR }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$OCI_SSH_PRIVATE_KEY" > ~/.ssh/oci_key
+          chmod 600 ~/.ssh/oci_key
+
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/oci_key "$OCI_USER@$OCI_HOST" "mkdir -p $OCI_REMOTE_DIR"
+
+          rsync -avz --delete \
+            --exclude '.git' \
+            --exclude 'node_modules' \
+            --exclude 'dist' \
+            -e "ssh -o StrictHostKeyChecking=no -i ~/.ssh/oci_key" \
+            ./ "$OCI_USER@$OCI_HOST:$OCI_REMOTE_DIR/"
+
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/oci_key "$OCI_USER@$OCI_HOST" "bash -s" <<'EOF'
+          set -e
+          cd "$OCI_REMOTE_DIR"
+          if [ ! -d node_modules ]; then
+            npm install
+          fi
+          npm run build || true
+          EOF

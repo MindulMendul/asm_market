@@ -1,0 +1,9 @@
+{
+  "expo": {
+    "name": "SOMA-MARKET",
+    "slug": "soma-market-app",
+    "platforms": ["ios", "android", "web"],
+    "sdkVersion": "49.0.0",
+    "entryPoint": "src/App.tsx"
+  }
+}

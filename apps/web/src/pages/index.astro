@@ -1,0 +1,17 @@
+---
+import Feed from "../components/Feed.svelte";
+import { apiClient } from "../lib/api";
+
+const items = await apiClient.api.items.$get();
+---
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SOMA-MARKET</title>
+  </head>
+  <body>
+    <main>
+      <Feed items={items} />
+    </main>
+  </body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "name": "@soma-market/api-client",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "index.ts",
+  "types": "index.ts",
+  "dependencies": {
+    "@hono/rpc": "^1.0.0"
+  }
+}

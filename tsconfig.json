@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitAny": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "@soma-market/db": ["packages/db"],
+      "@soma-market/api-client": ["packages/api-client"]
+    },
+    "types": ["bun-types"]
+  },
+  "include": ["apps/**/*", "packages/**/*"]
+}
