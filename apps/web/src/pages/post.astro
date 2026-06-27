@@ -1,0 +1,55 @@
+---
+import PostDetailClient from "../components/PostDetailClient.svelte";
+import Seo from "../components/Seo.astro";
+---
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <Seo title="내가 올린 글" />
+    <style is:global>
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background: #fff;
+        -webkit-font-smoothing: antialiased;
+      }
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        max-width: 720px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        height: 52px;
+        padding: 0 0.5rem;
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(8px);
+        font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      }
+      .topbar a {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        padding: 0.5rem 0.75rem;
+        color: #212124;
+        text-decoration: none;
+        font-size: 0.9375rem;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="topbar">
+      <a href="/">← 목록</a>
+    </nav>
+    <main>
+      <PostDetailClient client:load />
+    </main>
+  </body>
+</html>
