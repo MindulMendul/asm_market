@@ -55,15 +55,21 @@ jobs:
           set -e
           export PATH="\$HOME/.bun/bin:\$PATH"
           if ! command -v bun >/dev/null 2>&1; then
-            # bun 설치 스크립트는 unzip/curl이 필요함
+            # bun 설치 스크립트는 unzip/curl이 필요함.
+            # 서버에 깨진 패키지(예: nginx)가 있어도 배포가 멈추지 않도록 설치 실패는 허용하고,
+            # 이후 실제로 unzip/curl이 존재하는지만 검증한다.
             if ! command -v unzip >/dev/null 2>&1 || ! command -v curl >/dev/null 2>&1; then
               if command -v apt-get >/dev/null 2>&1; then
-                sudo apt-get update -y && sudo apt-get install -y unzip curl
+                sudo apt-get install -y unzip curl || true
               elif command -v dnf >/dev/null 2>&1; then
-                sudo dnf install -y unzip curl
+                sudo dnf install -y unzip curl || true
               elif command -v yum >/dev/null 2>&1; then
-                sudo yum install -y unzip curl
+                sudo yum install -y unzip curl || true
               fi
+            fi
+            if ! command -v unzip >/dev/null 2>&1 || ! command -v curl >/dev/null 2>&1; then
+              echo "[ERROR] unzip/curl 설치 실패로 bun을 설치할 수 없습니다." >&2
+              exit 1
             fi
             curl -fsSL https://bun.sh/install | bash
             export PATH="\$HOME/.bun/bin:\$PATH"
