@@ -1,16 +1,28 @@
 ---
 import Feed from "../components/Feed.svelte";
-const items = [];
 ---
 <!doctype html>
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>SOMA-MARKET</title>
+    <style is:global>
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background: #fff;
+        -webkit-font-smoothing: antialiased;
+      }
+    </style>
   </head>
   <body>
     <main>
-      <Feed {items} />
+      <Feed client:load />
     </main>
   </body>
 </html>
