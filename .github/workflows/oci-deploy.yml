@@ -55,6 +55,16 @@ jobs:
           set -e
           export PATH="\$HOME/.bun/bin:\$PATH"
           if ! command -v bun >/dev/null 2>&1; then
+            # bun 설치 스크립트는 unzip/curl이 필요함
+            if ! command -v unzip >/dev/null 2>&1 || ! command -v curl >/dev/null 2>&1; then
+              if command -v apt-get >/dev/null 2>&1; then
+                sudo apt-get update -y && sudo apt-get install -y unzip curl
+              elif command -v dnf >/dev/null 2>&1; then
+                sudo dnf install -y unzip curl
+              elif command -v yum >/dev/null 2>&1; then
+                sudo yum install -y unzip curl
+              fi
+            fi
             curl -fsSL https://bun.sh/install | bash
             export PATH="\$HOME/.bun/bin:\$PATH"
           fi
