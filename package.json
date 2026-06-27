@@ -1,14 +1,18 @@
 {
-  "name": "soma-market",
   "private": true,
-  "packageManager": "bun@1.2.0",
+  "type": "module",
+  "packageManager": "bun@1.3.14",
   "workspaces": [
     "apps/*",
     "packages/*"
   ],
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js"
+  },
   "scripts": {
-    "dev": "npm --prefix apps/web run dev",
-    "build": "npm --prefix apps/web run build && npm --prefix apps/app run build",
+    "dev": "bun --cwd apps/web dev",
+    "build": "bun --cwd apps/web build",
     "typecheck": "node -e \"console.log('JSDoc-only mode: typecheck skipped')\"",
     "lint": "node -e \"console.log('JSDoc-only mode: lint skipped')\""
   },

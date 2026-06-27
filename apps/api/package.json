@@ -9,7 +9,6 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@drizzle-orm/postgres-js": "^0.30.0",
     "@supabase/supabase-js": "^2.0.0",
     "drizzle-orm": "^0.30.0",
     "hono": "^4.0.0",

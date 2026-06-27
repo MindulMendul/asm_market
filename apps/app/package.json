@@ -5,16 +5,17 @@
   "type": "module",
   "scripts": {
     "dev": "capacitor run android",
-    "build": "npm --prefix ../web run build && npx cap sync",
-    "sync": "cap sync",
-    "open:android": "cap open android",
-    "open:ios": "cap open ios"
+    "build": "cd ../web && bun run build && cd ../app && bunx cap sync",
+    "sync": "bunx cap sync",
+    "open:android": "bunx cap open android",
+    "open:ios": "bunx cap open ios"
   },
   "dependencies": {
     "@capacitor/android": "^6.0.0",
     "@capacitor/cli": "^6.0.0",
     "@capacitor/core": "^6.0.0",
     "@capacitor/ios": "^6.0.0",
+    "@soma-market/api-client": "workspace:*",
     "hono": "^4.0.0"
   }
 }

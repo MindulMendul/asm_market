@@ -1,4 +1,3 @@
-// apps/web/astro.config.mjs
 import { defineConfig } from "astro/config";
 import svelte from "@astrojs/svelte";
 

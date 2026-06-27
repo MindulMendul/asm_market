@@ -1,9 +1,8 @@
 ---
 import Feed from "../components/Feed.svelte";
-import { apiClient } from "../lib/api.js";
-
-const items = await apiClient.api.items.$get();
+const items = [];
 ---
+<!doctype html>
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
@@ -11,7 +10,7 @@ const items = await apiClient.api.items.$get();
   </head>
   <body>
     <main>
-      <Feed items={items} />
+      <Feed {items} />
     </main>
   </body>
 </html>
