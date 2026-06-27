@@ -4,8 +4,5 @@
   "private": true,
   "type": "module",
   "main": "index.ts",
-  "types": "index.ts",
-  "dependencies": {
-    "@hono/rpc": "^1.0.0"
-  }
+  "types": "index.ts"
 }

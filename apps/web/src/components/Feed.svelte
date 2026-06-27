@@ -1,17 +1,20 @@
 <!-- apps/web/src/components/Feed.svelte -->
-<script lang="ts">
-  export type Item = {
-    id: number;
-    title: string;
-    price: string;
-    description: string;
-    images: string[];
-    status: "FOR_SALE" | "RESERVED" | "SOLD";
-    seller_id: string;
-    created_at: string;
-  };
+<script>
+  /**
+   * @typedef {
+   *   id: number;
+   *   title: string;
+   *   price: string;
+   *   description: string;
+   *   images: string[];
+   *   status: "FOR_SALE" | "RESERVED" | "SOLD";
+   *   seller_id: string;
+   *   created_at: string;
+   * } Item
+   */
 
-  export let items: Item[] = [];
+  /** @type {Item[]} */
+  export let items = [];
 </script>
 
 <section class="feed">

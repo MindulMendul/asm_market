@@ -4,12 +4,17 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "expo start"
+    "dev": "capacitor run android",
+    "build": "npm --prefix ../web run build && npx cap sync",
+    "sync": "cap sync",
+    "open:android": "cap open android",
+    "open:ios": "cap open ios"
   },
   "dependencies": {
-    "@hono/rpc": "^1.0.0",
-    "expo": "^49.0.0",
-    "react": "^18.3.0",
-    "react-native": "^0.72.0"
+    "@capacitor/android": "^6.0.0",
+    "@capacitor/cli": "^6.0.0",
+    "@capacitor/core": "^6.0.0",
+    "@capacitor/ios": "^6.0.0",
+    "hono": "^4.0.0"
   }
 }
