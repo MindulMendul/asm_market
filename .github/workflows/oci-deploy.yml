@@ -20,16 +20,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v5
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          node-version: "20"
+          bun-version: "1.3.14"
 
       - name: Install dependencies
-        run: npm install
+        run: bun install --frozen-lockfile
 
       - name: Build monorepo
-        run: npm run build
+        run: bun run build
 
       - name: Deploy to OCI
         env:
@@ -51,11 +51,14 @@ jobs:
             -e "ssh -o StrictHostKeyChecking=no -i ~/.ssh/oci_key" \
             ./ "$OCI_USER@$OCI_HOST:$OCI_REMOTE_DIR/"
 
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/oci_key "$OCI_USER@$OCI_HOST" "bash -s" <<'EOF'
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/oci_key "$OCI_USER@$OCI_HOST" "bash -s" <<EOF
           set -e
-          cd "$OCI_REMOTE_DIR"
-          if [ ! -d node_modules ]; then
-            npm install
+          export PATH="\$HOME/.bun/bin:\$PATH"
+          if ! command -v bun >/dev/null 2>&1; then
+            curl -fsSL https://bun.sh/install | bash
+            export PATH="\$HOME/.bun/bin:\$PATH"
           fi
-          npm run build || true
+          cd "$OCI_REMOTE_DIR"
+          bun install --frozen-lockfile
+          bun run build || true
           EOF
