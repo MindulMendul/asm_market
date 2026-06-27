@@ -39,10 +39,15 @@ jobs:
           OCI_REMOTE_DIR: ${{ secrets.OCI_REMOTE_DIR }}
         run: |
           mkdir -p ~/.ssh
-          echo "$OCI_SSH_PRIVATE_KEY" > ~/.ssh/oci_key
+          chmod 700 ~/.ssh
+          printf '%s\n' "$OCI_SSH_PRIVATE_KEY" > ~/.ssh/oci_key
           chmod 600 ~/.ssh/oci_key
 
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/oci_key "$OCI_USER@$OCI_HOST" "mkdir -p $OCI_REMOTE_DIR"
+          # 키 형식 검증 (실패 시 키 내용이 잘못 저장된 것)
+          ssh-keygen -y -f ~/.ssh/oci_key > /dev/null && echo "[OK] private key parsed" || echo "[WARN] private key parse failed"
+
+          # 연결 진단용 verbose (실패해도 다음 단계로)
+          ssh -v -o StrictHostKeyChecking=no -o BatchMode=yes -i ~/.ssh/oci_key "$OCI_USER@$OCI_HOST" "mkdir -p $OCI_REMOTE_DIR"
 
           rsync -avz --delete \
             --exclude '.git' \
